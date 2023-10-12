@@ -1,0 +1,48 @@
+<%- include('../partials/header') %>
+<body>
+	<main>
+		  <form class="" action="/reviews" method="get">
+			<div class="row">
+			  <div class="col-3">
+  
+			  </div>
+			  <div class="col-5">
+				<input class="form-control" type="text" name="review" placeholder="Search Reviews...">
+			  </div>
+			  <div class="col-1">
+				<input class="btn btn-light" type="submit" name="submitReview" value = "Filter"/>
+		  </form>
+		</div>
+	  </div>
+	  <div class="container-lg" style="margin-top: 2%;">
+	  <div class="container-lg" style="margin-top: 2%;">
+
+
+
+
+		<div class="container">
+			<br>
+					<table class="table">
+						<thead>
+						  <tr>
+							<th scope="col">Brewery Name</th>
+							<th scope="col">Review</th>
+							<th scope="col">Review Date</th>
+						  </tr>
+						</thead>
+						<tbody>
+				  <% if (reviews) {
+					var media ='';
+					reviews.forEach(function(item){
+						media +='<tr><td>'+ item.brewery_name +'</td>';
+						media +='<td>' + item.review + '</td>';
+						media +='<td>' + item.review_date + '</td></tr>';
+					
+					   
+					}); %>
+					<%- media %>
+				  <% } %>
+				</tbody>
+				</table>
+	</main>
+    <%- include('../partials/footer') %>

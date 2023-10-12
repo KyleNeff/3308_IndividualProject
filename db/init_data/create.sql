@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS reviews (
+  id SERIAL PRIMARY KEY,       
+  brewery_name VARCHAR(40),   
+  review TEXT NOT NULL,
+  review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP  
+);

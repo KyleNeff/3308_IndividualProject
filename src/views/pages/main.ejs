@@ -1,0 +1,94 @@
+<%- include('../partials/header') %>
+<body>
+	<main>
+		  <form class="" action="/get_feed" method="get">
+			<div class="row">
+			  <div class="col-3">
+  
+			  </div>
+			  <div class="col-5">
+				<input class="form-control" type="text" name="title" placeholder="Search...">
+			  </div>
+			  <div class="col-1">
+				<input class="btn btn-light" type="submit" name="Submit" value = "Submit"/>
+		  </form>
+		</div>
+	  </div>
+	  <div class="container-lg" style="margin-top: 2%;">
+	  <div class="container-lg" style="margin-top: 2%;">
+		
+	  <div class="card">
+		<%
+		if(items){
+			var cards= '';
+			var cols = 0;
+			Array.from(items).forEach(function(item){   
+				if (cols == 3){
+					cards += '</div></br>';
+					cols = 0;
+				  }
+				  if (cols == 0){
+					cards += '<div class="card-group">';
+				  }
+				cards += '<div class="card border-dark mb-3" style="width: 18rem; margin: 10px;">';
+				cards += '<div class="card-body">';
+				cards += '<h4 class="card-title">' + item.name + '</h4>';
+				cards += '<p class="card-text">' + item.brewery_type + '</p>';
+				cards += '<p class="card-text">' + item.street + '</p>';
+				let modal_function = "\"openModal(" + item.name + ")\"" 
+				cards += `<a id = "${item.name}" data-info = "${item.name}" href = "#myModal" class = "btn btn-info" name="myModal" data-toggle = "modal" onclick='openModal("${item.name}")'>Add Review</a></div></div>`;
+				  cols++;
+			  });
+				  cards += '</div>';
+			  %>
+
+			>
+			  <%- cards %>
+			  <% } %>
+			  <!-- Modal HTML -->
+			  <div id="myModal" class="modal" tabindex ="-1" aria-labelledby="ReviewModal" aria-hidden ="true">
+			<div class = "modal-dialog">
+				<div class = "modal-content">
+					<div class = "modal-header">
+						<h5 class = "modal-title" id="ModalTitle">Review</h5>
+						<button
+							type = "button"
+							class = "close"
+							data-dismiss="modal"
+							aria-label="Close"
+						>Close</button>
+					</div>
+					<div id="modalBody" class="modal-body">
+						<form action ="/addReview" method="post">
+						<div class="form-group">
+						<div class="mb-3">
+						<label id="breweryName" name ="breweryName" class = "col-form-label">Brewery Name:</label>
+						<input type="text" class="form-control" name="breweryName" id= "breweryName"required="required" readonly></label>
+					</div>
+				</div>
+					<div class="mb-3">
+						<label id="breweryReview" name ="breweryReview" class = "col-form-label">Brewery Review:</label>
+						<input type="text" class="form-control" name="breweryReview" id= "breweryReview"required="required"></label>
+					</div>
+					<input class="btn btn-light" type="submit" name="Submit" value = "Submit"/>
+				</form>
+
+
+				</div>
+			</div>
+				
+			</div>	  
+	</main>
+
+	
+	<script>
+		$('#myModal').on('show.bs.modal', function (event) {
+  		var button = $(event.relatedTarget) // Button that triggered the modal
+  		var name = button.data('info') // Extract info from data-* attributes
+	// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+	// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+		var modal = $(this)
+		modal.find('.form-group input').val(name)
+		})
+	</script>
+<%- include('../partials/footer') %>
